@@ -1,0 +1,35 @@
+plugins {
+  id 'nebula.provided-base' version '3.0.3'
+  id 'nebula.optional-base' version '3.0.3'
+  id 'nebula.info-basic' version '3.0.3'
+  id 'nebula.info-scm' version '3.0.3'
+  id 'nebula.info-java' version '3.0.3'
+  id 'nebula.nebula-release' version '3.1.1'
+}
+
+allprojects {
+  repositories {
+    mavenLocal()
+    jcenter()
+  }
+
+  apply plugin: 'idea'
+  apply plugin: 'eclipse'
+
+  apply plugin: 'nebula.provided-base'
+  apply plugin: 'nebula.optional-base'
+  apply plugin: 'nebula.info-basic'
+  apply plugin: 'nebula.info-scm'
+  apply plugin: 'nebula.info-java'
+}
+
+subprojects {
+  apply plugin: 'java'
+
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.10'
+}
