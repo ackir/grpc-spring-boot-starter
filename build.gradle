@@ -126,7 +126,7 @@ configure(allprojects.findAll { it.name.startsWith 'example-' }) {
 
     plugins {
       grpc {
-        artifact = "io.grpc:protoc-gen-grpc-java:0.13.1"
+        artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
       }
     }
 
