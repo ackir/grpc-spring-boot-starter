@@ -1,5 +1,8 @@
 package org.grpc.spring.boot.autoconfigure.annotation;
 
+import org.grpc.spring.boot.autoconfigure.GRpcAutoConfiguration;
+import org.springframework.context.annotation.Import;
+
 import java.lang.annotation.*;
 
 /**
@@ -10,10 +13,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface EnableGrpcServer {
+@Import(GRpcAutoConfiguration.class)
+public @interface EnableGRpcServer {
 
   /**
-   * Base packages to scan for interfaces with @GrpcService annotation.
+   * Base packages to scan for interfaces with @GRpcService annotation.
    */
   String[] basePackages() default {};
 }

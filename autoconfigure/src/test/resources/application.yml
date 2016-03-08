@@ -1,0 +1,9 @@
+grpc:
+ enabled: true
+ servers:
+   -
+     address: 127.0.0.1
+     port: 6565
+   -
+     address: 127.0.0.1
+     port: 6566

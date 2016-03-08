@@ -1,5 +1,6 @@
 package org.grpc.spring.boot.autoconfigure.annotation;
 
+import org.springframework.stereotype.Service;
 import java.lang.annotation.*;
 
 /**
@@ -8,11 +9,8 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Inherited
 @Documented
-public @interface GrpcService {
-  /**
-   * The path for mapping service to some URL
-   * Default value is grpc service bean name
-   */
-  String path();
+@Service
+public @interface GRpcService {
 }
