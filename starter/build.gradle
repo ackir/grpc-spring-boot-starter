@@ -1,0 +1,4 @@
+dependencies {
+  compile 'org.springframework.boot:spring-boot-autoconfigure'
+  compile project(':autoconfigure')
+}

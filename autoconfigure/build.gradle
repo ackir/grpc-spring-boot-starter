@@ -1,8 +1,8 @@
 apply plugin: 'groovy'
 
 dependencies {
-  compile 'io.grpc:grpc-netty'
   compile 'org.springframework.boot:spring-boot-starter'
+  provided 'io.grpc:grpc-netty'
   provided 'org.springframework.boot:spring-boot-configuration-processor'
   provided 'org.springframework.boot:spring-boot-starter-test'
 }

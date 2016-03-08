@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_package = "demo.grpc.calculator";
+
+message CalculateRequest {
+    int64 first = 1;
+    int64 second = 2;
+}
+
+message ResultReply {
+    int64 result = 1;
+}
+
+service Calculator {
+    rpc plus(CalculateRequest) returns (ResultReply) { }
+    rpc plusStream(stream CalculateRequest) returns (stream ResultReply) { }
+}

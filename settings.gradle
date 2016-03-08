@@ -1,4 +1,6 @@
 rootProject.name = 'grpc-spring-boot'
+
 include 'autoconfigure'
 include 'starter'
 
+include 'examples:example-simple'

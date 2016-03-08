@@ -102,8 +102,8 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
 
   private void buildServer(Object expectedGRpcServiceBean, List<ServerBuilder> runningServers) {
     Stream.of(expectedGRpcServiceBean.getClass().getInterfaces())
-        .filter(aClass -> aClass.getEnclosingClass() != null && aClass.getName().endsWith(GRPC_CLASS_IDENTIFIER))
-        .flatMap(aClass -> Stream.of(ReflectionUtils.getAllDeclaredMethods(aClass)))
+        .filter(aClass -> aClass.getEnclosingClass() != null && aClass.getEnclosingClass().getName().endsWith(GRPC_CLASS_IDENTIFIER))
+        .flatMap(aClass -> Stream.of(ReflectionUtils.getAllDeclaredMethods(aClass.getEnclosingClass())))
         .filter(method -> method.getName().equals("bindService")
             && method.getParameterCount() > 0
             && method.getParameterTypes()[0].isAssignableFrom(expectedGRpcServiceBean.getClass()))
