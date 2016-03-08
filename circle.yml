@@ -1,0 +1,22 @@
+machine:
+  timezone:
+    Europe/Moscow
+  java:
+    version: oraclejdk8
+  environment:
+    TERM: dumb
+
+dependencies:
+  cache_directories:
+    - ~/.gradle
+    - ~/.ivy2
+    - ~/.m2
+  override:
+    - ./gradlew resolveAllDependencies
+
+test:
+  override:
+    - ./gradlew test
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - cp -rf ./build/reports/allTests/* $CIRCLE_TEST_REPORTS/junit/

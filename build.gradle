@@ -74,6 +74,24 @@ subprojects {
     testCompile 'org.spockframework:spock-core'
     testCompile 'org.spockframework:spock-spring'
   }
+
+  task resolveAllDependencies {
+    doLast {
+      configurations.all { it.resolve() }
+    }
+  }
+
+  test {
+    reports {
+      junitXml.enabled = true
+      html.enabled = true
+    }
+  }
+}
+
+task testReport(type: TestReport) {
+  destinationDir = file("$buildDir/reports/allTests")
+  reportOn subprojects*.test
 }
 
 /**
