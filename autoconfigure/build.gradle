@@ -1,10 +1,10 @@
 apply plugin: 'groovy'
 
 dependencies {
-  compile 'org.springframework.boot:spring-boot-starter'
-  provided 'io.grpc:grpc-netty'
-  provided 'org.springframework.boot:spring-boot-configuration-processor'
-  provided 'org.springframework.boot:spring-boot-starter-test'
+  provided 'org.springframework.boot:spring-boot-starter', optional
+  provided 'io.grpc:grpc-netty', optional
+  provided 'org.springframework.boot:spring-boot-configuration-processor', optional
+  provided 'org.springframework.boot:spring-boot-starter-test', optional
 }
 
 compileJava.dependsOn(processResources) // from spring doc, need for generate meta-data by annotation processor

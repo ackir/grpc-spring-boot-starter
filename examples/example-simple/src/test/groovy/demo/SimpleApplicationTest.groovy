@@ -66,7 +66,6 @@ class SimpleApplicationTest extends Specification {
           if (value.result == 6) //increase amount of sum for 2 number after each call
             assert value.result == 6
         }
-        println "summ: ${value.result}"
       }
 
       @Override

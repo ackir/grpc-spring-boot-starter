@@ -1,4 +1,8 @@
 dependencies {
-  compile 'org.springframework.boot:spring-boot-autoconfigure'
   compile project(':autoconfigure')
+
+  compile 'org.springframework.boot:spring-boot-starter'
+  compile 'io.grpc:grpc-netty'
+  compile 'org.springframework.boot:spring-boot-configuration-processor'
+  compile 'org.springframework.boot:spring-boot-starter-test'
 }
