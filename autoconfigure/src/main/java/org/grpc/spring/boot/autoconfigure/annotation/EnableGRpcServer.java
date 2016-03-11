@@ -16,8 +16,4 @@ import java.lang.annotation.*;
 @Import(GRpcAutoConfiguration.class)
 public @interface EnableGRpcServer {
 
-  /**
-   * Base packages to scan for interfaces with @GRpcService annotation.
-   */
-  String[] basePackages() default {};
 }
