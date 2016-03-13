@@ -2,6 +2,7 @@ package demo
 
 import demo.grpc.calculator.CalculatorGrpc
 import demo.grpc.calculator.CalculatorOuterClass
+import demo.grpc.health.HealthGrpc
 import io.grpc.ManagedChannel
 import io.grpc.netty.NettyChannelBuilder
 import io.grpc.stub.StreamObserver
@@ -11,7 +12,7 @@ import spock.lang.Specification
 import spock.util.concurrent.AsyncConditions
 
 import static demo.grpc.calculator.CalculatorOuterClass.CalculateRequest.newBuilder
-
+import static demo.grpc.health.HealthOuterClass.Empty
 /**
  * @author tolkv
  * @since 08/03/16
@@ -80,13 +81,22 @@ class SimpleApplicationTest extends Specification {
     })
 
     when:
-    observer.onNext(calcRequest)
-    observer.onNext(calcRequest)
-    observer.onNext(calcRequest)
+    3.times { observer.onNext calcRequest }
 
     observer.onCompleted()
 
     then:
     conditions.await(2.0d)
+  }
+
+  def 'health service should works'(){
+    given:
+    def stub = HealthGrpc.newFutureStub(channel)
+
+    when:
+    def health = stub.health(Empty.defaultInstance).get()
+
+    then:
+    health.stauts == 'OK'
   }
 }

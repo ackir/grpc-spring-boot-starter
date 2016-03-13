@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package demo.grpc.health;
+
+option java_package = "demo.grpc.health";
+
+message HealthReply {
+    string stauts = 1;
+}
+
+message Empty {}
+
+service Health {
+    rpc health(Empty) returns (HealthReply) { }
+}

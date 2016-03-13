@@ -2,6 +2,7 @@ apply plugin: 'groovy'
 
 dependencies {
   provided 'org.springframework.boot:spring-boot-starter', optional
+  provided 'org.springframework.boot:spring-boot-starter-actuator', optional
   provided 'io.grpc:grpc-netty', optional
   provided 'org.springframework.boot:spring-boot-configuration-processor', optional
   provided 'org.springframework.boot:spring-boot-starter-test', optional
