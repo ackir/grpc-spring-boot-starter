@@ -16,9 +16,9 @@ dependencies:
 
 test:
   override:
-    - ./gradlew build testReport
+    - ./gradlew build jacocoTestReport testReport
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - cp -rf ./build/reports/allTests/* $CIRCLE_TEST_REPORTS/junit/
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+    - cp -rf ./build/reports/jacocoHtml/* $CIRCLE_TEST_REPORTS/junit/
+    - bash <(curl -s https://codecov.io/bash)
