@@ -6,6 +6,7 @@ buildscript {
 plugins {
   id "java"
   id "groovy"
+  id 'jacoco'
   id 'nebula.optional-base' version '3.0.3'
   id 'nebula.provided-base' version '3.0.3'
   id 'nebula.info-basic' version '3.0.3'
@@ -37,6 +38,7 @@ allprojects {
 
 subprojects {
   apply plugin: 'java'
+  apply plugin: 'jacoco'
   apply plugin: 'nebula.provided-base'
   apply plugin: 'nebula.optional-base'
   apply plugin: 'io.spring.dependency-management'
@@ -87,6 +89,13 @@ subprojects {
       html.enabled = true
     }
   }
+  jacocoTestReport {
+    reports {
+      xml.enabled true
+      csv.enabled true
+      html.destination "${buildDir}/jacocoHtml"
+    }
+  }
 }
 
 task testReport(type: TestReport) {
@@ -113,6 +122,9 @@ configure(allprojects.findAll { it.name.startsWith 'example-' }) {
     compile 'io.grpc:grpc-stub'
     compile 'io.grpc:grpc-protobuf'
     compile 'io.grpc:grpc-netty'
+    compile 'io.netty:netty-common'
+    compile 'io.netty:netty-transport'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
 
     compile project(':starter')
 
@@ -171,6 +183,10 @@ configure(allprojects.findAll { it.name.startsWith 'example-' }) {
     }
   }
   clean.dependsOn cleanProtoGen
+
+  springBoot {
+    executable = true
+  }
 }
 
 task wrapper(type: Wrapper) {
