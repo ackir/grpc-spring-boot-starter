@@ -1,5 +1,6 @@
 # GRpc Spring Boot Starter
 [![Circle CI](https://circleci.com/gh/lavcraft/grpc-spring-boot-starter/tree/master.svg?style=svg)](https://circleci.com/gh/lavcraft/grpc-spring-boot-starter/tree/master)
+[![codecov.io](https://codecov.io/github/lavcraft/grpc-spring-boot-starter/coverage.svg?branch=master)](https://codecov.io/github/lavcraft/grpc-spring-boot-starter?branch=master)
 
 ## Usage
 
