@@ -22,7 +22,10 @@ import java.util.List;
 public class GRpcServerProperties {
   List<GRpcServerInstance> servers = new ArrayList<>(1);
 
+  GRpcServerInstance healthServer;
+
   @Data
+  @Builder
   @NoArgsConstructor
   @AllArgsConstructor
   public static class GRpcServerInstance {

@@ -1,1 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.grpc.spring.boot.autoconfigure.GRpcAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.grpc.spring.boot.autoconfigure.GRpcAutoConfiguration,\
+  org.grpc.spring.boot.autoconfigure.NettyHttpHealthCheckAutoConfiguration
