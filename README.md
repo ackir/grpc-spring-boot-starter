@@ -1,4 +1,6 @@
 # GRpc Spring Boot Starter
+
+[![Join the chat at https://gitter.im/lavcraft/grpc-spring-boot-starter](https://badges.gitter.im/lavcraft/grpc-spring-boot-starter.svg)](https://gitter.im/lavcraft/grpc-spring-boot-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Circle CI](https://circleci.com/gh/lavcraft/grpc-spring-boot-starter/tree/master.svg?style=shield)](https://circleci.com/gh/lavcraft/grpc-spring-boot-starter/tree/master)
 [![codecov.io](https://codecov.io/github/lavcraft/grpc-spring-boot-starter/coverage.svg?branch=master)](https://codecov.io/github/lavcraft/grpc-spring-boot-starter?branch=master)
 
