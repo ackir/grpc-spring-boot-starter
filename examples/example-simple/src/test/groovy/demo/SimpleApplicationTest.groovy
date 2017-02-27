@@ -6,8 +6,7 @@ import demo.grpc.health.HealthGrpc
 import io.grpc.ManagedChannel
 import io.grpc.netty.NettyChannelBuilder
 import io.grpc.stub.StreamObserver
-import org.springframework.boot.test.IntegrationTest
-import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 import spock.util.concurrent.AsyncConditions
 
@@ -17,15 +16,14 @@ import static demo.grpc.health.HealthOuterClass.Empty
  * @author tolkv
  * @since 08/03/16
  */
-@SpringApplicationConfiguration(classes = SimpleApplication)
-@IntegrationTest
+@SpringBootTest(classes = SimpleApplication)
 class SimpleApplicationTest extends Specification {
   ManagedChannel channel
 
   def setup() {
     channel = NettyChannelBuilder.forAddress("localhost", 6565)
         .usePlaintext(true)
-        .build();
+        .build()
   }
 
   def clean() {
@@ -34,11 +32,11 @@ class SimpleApplicationTest extends Specification {
 
   def 'should calc 1+1 and + count of calls'() {
     given:
-    def stub = CalculatorGrpc.newFutureStub(channel);
+    def stub = CalculatorGrpc.newFutureStub(channel)
     def calcRequest = newBuilder()
         .setFirst(1)
         .setSecond(1)
-        .build();
+        .build()
 
     expect:
     stub.plus(calcRequest).get().getResult() == replay

@@ -1,13 +1,15 @@
 import org.grpc.spring.boot.autoconfigure.component.GRpcServersWrapper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import spock.lang.Specification
+
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE
 /**
  * @author tolkv
  * @since 07/03/16
  */
-@SpringApplicationConfiguration(classes = TestDefaultConfiguration.class)
+@SpringBootTest(webEnvironment = NONE, classes = [TestDefaultConfiguration])
 class ContextRunTest extends Specification {
   public static final int DEFAULT_GRPC_PORT = 6565
   @Autowired

@@ -10,7 +10,7 @@ import org.springframework.test.annotation.DirtiesContext
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static org.springframework.boot.test.EnvironmentTestUtils.addEnvironment
+import static org.springframework.boot.test.util.EnvironmentTestUtils.addEnvironment
 
 /**
  * @author tolkv

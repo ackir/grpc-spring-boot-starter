@@ -12,7 +12,7 @@ import static demo.grpc.health.HealthOuterClass.*;
  * @since 13/03/16
  */
 @GRpcService
-public class HealthService implements HealthGrpc.Health {
+public class HealthService extends HealthGrpc.HealthImplBase {
   @Override
   public void health(Empty request, StreamObserver<HealthOuterClass.HealthReply> responseObserver) {
     responseObserver.onNext(HealthReply.newBuilder().

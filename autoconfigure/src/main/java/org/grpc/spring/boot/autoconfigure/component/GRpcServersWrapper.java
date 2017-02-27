@@ -1,8 +1,8 @@
 package org.grpc.spring.boot.autoconfigure.component;
 
+import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.ServerServiceDefinition;
 import io.grpc.netty.NettyServerBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -101,15 +100,15 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
   }
 
   private void buildServer(Object expectedGRpcServiceBean, List<ServerBuilder> runningServers) {
-    Stream.of(expectedGRpcServiceBean.getClass().getInterfaces())
+    Stream.of(expectedGRpcServiceBean.getClass().getSuperclass())
         .filter(aClass -> aClass.getEnclosingClass() != null && aClass.getEnclosingClass().getName().endsWith(GRPC_CLASS_IDENTIFIER))
         .flatMap(aClass -> Stream.of(ReflectionUtils.getAllDeclaredMethods(aClass.getEnclosingClass())))
-        .filter(method -> method.getName().equals("bindService")
+        .filter(method -> method.getName().equals("newStub")
             && method.getParameterCount() > 0
-            && method.getParameterTypes()[0].isAssignableFrom(expectedGRpcServiceBean.getClass()))
+            && method.getParameterTypes()[0].isAssignableFrom(io.grpc.Channel.class))
         .findFirst()
         .ifPresent(method -> runningServers
-            .forEach(serverBuilder -> bindServiceAndAddToServer(expectedGRpcServiceBean, method, serverBuilder)));
+            .forEach(serverBuilder -> addServiceToServer(expectedGRpcServiceBean, serverBuilder)));
   }
 
   private void buildSaveAndStartServer(ServerBuilder serverBuilder) {
@@ -124,14 +123,10 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
     log.info("Server has been starting {}", server);
   }
 
-  private void bindServiceAndAddToServer(Object expectedGRpcServiceBean, Method method, ServerBuilder serverBuilder) {
-    ServerServiceDefinition serviceDefinition = invokeBindMethod(expectedGRpcServiceBean, method);
-    serverBuilder.addService(serviceDefinition);
-    log.info("Add service {} to {}", serviceDefinition.getName(), serverBuilder);
-  }
-
-  @SneakyThrows
-  private ServerServiceDefinition invokeBindMethod(Object expectedGrpcServiceBean, Method method) {
-    return (ServerServiceDefinition) method.invoke(null, expectedGrpcServiceBean);
+  private void addServiceToServer(Object expectedGRpcServiceBean, ServerBuilder serverBuilder) {
+//    ServerServiceDefinition serviceDefinition = invokeBindMethod(expectedGRpcServiceBean, method);
+    BindableService asBindableService = (BindableService) expectedGRpcServiceBean;
+    serverBuilder.addService(asBindableService);
+    log.info("Add service {} to {}", expectedGRpcServiceBean, serverBuilder);
   }
 }

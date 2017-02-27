@@ -17,7 +17,7 @@ import static demo.grpc.calculator.CalculatorOuterClass.ResultReply;
  */
 @Slf4j
 @GRpcService
-public class CalculatorService implements CalculatorGrpc.Calculator {
+public class CalculatorService extends CalculatorGrpc.CalculatorImplBase {
   private final AtomicInteger count = new AtomicInteger(0);
 
   @Override
