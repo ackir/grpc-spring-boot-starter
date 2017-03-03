@@ -5,6 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import spock.lang.Specification
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE
+
 /**
  * @author tolkv
  * @since 07/03/16
@@ -25,16 +26,23 @@ class ContextRunTest extends Specification {
 
     expect:
     servers.size() == 1
-    GRpcServersWrapper server = servers.values().first()
+    GRpcServersWrapper serversWrapper = servers.values().first()
+    def serverWithDefaultPort = serversWrapper.servers.first()
+    def serverWithRandomPort = serversWrapper.servers[1]
 
     and:
-    with(server.getGRpcServerProperties().servers.first()) {
-      address == InetAddress.getLocalHost()
+    with(serverWithDefaultPort) {
       port == DEFAULT_GRPC_PORT
     }
 
     and:
-    server.servers.size() == 2
+    with(serverWithRandomPort) {
+      port != 0
+      println "Port: $port"
+    }
+
+    and:
+    serversWrapper.servers.size() == 2
   }
 
   def clean() {

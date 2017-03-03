@@ -26,8 +26,10 @@ grpc:
      port: 6565
    -
      address: 127.0.0.1
-     port: 6566
+     port: 0
 ```
+
+Use `port: 0` for auto assign random port
 
 or
 
@@ -35,6 +37,8 @@ or
     grpc.enabled: true
     grpc.servers[0].address=127.0.0.1
     grpc.servers[0].port=6565
+    grpc.servers[0].address=127.0.0.1
+    grpc.servers[0].port=0    
 ```    
 
 ## Default values
@@ -46,8 +50,9 @@ or
 
 | name                      | version       |
 | ---                       | ---           |
-| io.grpc:grpc-stub         | 0.13.1        |
-| io.grpc:grpc-protobuf     | 0.13.1        |
-| io.grpc:grpc-netty        | 0.13.1        |
-| com.google.protobufprotoc | 3.0.0-beta-2  |
-| Spring Boot               | 1.3.3.RELEASE |
+| io.grpc:grpc-stub         | 1.1.2         |
+| io.grpc:grpc-protobuf     | 1.1.2         |
+| io.grpc:grpc-netty        | 1.1.2         |
+| com.google.protobufprotoc | 3.2.0         |
+| Spring Boot               | 1.5.1.RELEASE |
+| Spring Boot               | 1.5.1.RELEASE |

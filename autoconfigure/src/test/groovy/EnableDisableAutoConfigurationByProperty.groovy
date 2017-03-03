@@ -50,7 +50,7 @@ class EnableDisableAutoConfigurationByProperty extends Specification {
     String[] args = (['grpc.enabled=true'] + grpcServers).toArray(new String[grpcServers.size()])
     addEnvironment(context, args)
     context.register(GRpcAutoConfiguration)
-    context.register(SupressBindUnrealIPAddressGRpcWrapperConfiguration)
+    context.register(SuppressBindUnrealIPAddressGRecWrapperConfiguration)
     context.refresh()
 
     expect:
@@ -67,12 +67,13 @@ class EnableDisableAutoConfigurationByProperty extends Specification {
     ['grpc.servers[0].address=127.0.0.2', 'grpc.servers[0].port=6326']    | '127.0.0.2'    | 6326
     ['grpc.servers[0].address=192.168.1.19', 'grpc.servers[0].port=6324'] | '192.168.1.19' | 6324
     ['grpc.servers[0].address=127.0.0.18', 'grpc.servers[0].port=1202']   | '127.0.0.18'   | 1202
+    ['grpc.servers[0].address=127.0.0.18', 'grpc.servers[0].port=0']      | '127.0.0.18'   | 0
     ['grpc.servers[0].address=127.0.0.18', 'grpc.servers[0].port=1202',
      'grpc.servers[1].address=127.0.0.19', 'grpc.servers[1].port=1203']   | '127.0.0.18'   | 1202
   }
 
   @Configuration
-  protected static class SupressBindUnrealIPAddressGRpcWrapperConfiguration {
+  protected static class SuppressBindUnrealIPAddressGRecWrapperConfiguration {
     @Autowired
     ApplicationContext context;
     @Autowired
@@ -82,7 +83,7 @@ class EnableDisableAutoConfigurationByProperty extends Specification {
     public GRpcServersWrapper gRpcServersWrapper() {
 
       def wrapper = new GRpcServersWrapper(context, gRpcServerProperties);
-      wrapper.setServerStartHook({ Server -> println "supress starting" })
+      wrapper.setServerStartHook({ Server -> println "suppress starting" })
       wrapper
     }
   }
