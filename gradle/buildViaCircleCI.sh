@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script will build the project.
 
-SWITCHES="jacocoTestReport testReport --info --stacktrace"
+SWITCHES="jacocoTestReport testReport --info --stacktrace --console=plain"
 
 GRADLE_VERSION=$(./gradlew -version | grep Gradle | cut -d ' ' -f 2)
 echo "CI_PULL_REQUEST:$CI_PULL_REQUEST"

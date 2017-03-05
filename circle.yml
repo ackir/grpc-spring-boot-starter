@@ -7,23 +7,24 @@ machine:
     TERM: dumb
 
 dependencies:
+  pre:
+    - ./gradlew autoconfigure:dependencies --console=plain
+    - openssl aes-256-cbc -d -in gradle/env.enc -k $KEY > extra-vars
   cache_directories:
     - ~/.gradle
     - ~/.ivy2
     - ~/.m2
-
 test:
   override:
-    - ./gradlew test
+    - source extra-vars && ./gradle/buildViaCircleCI.sh
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - mkdir -p $CIRCLE_TEST_REPORTS/jacoco/
+    - cp -rf ./build/reports/allTests/* $CIRCLE_TEST_REPORTS/junit/
+    - find . -type d -regex ".*build/jacocoHtml/.*" -exec cp -rf {} $CIRCLE_TEST_REPORTS/jacoco/ \;
+    - bash <(curl -s https://codecov.io/bash)
 deployment:
   release:
     tag: /v[0-9]+(\.[0-9]+)*/
     commands:
-      - mkdir build && openssl aes-256-cbc -d -in gradle/env.enc -out build/extra-vars -k $KEY
-      - source build/extra-vars && ./gradle/buildViaCircleCI.sh
-      - rm build/extra-vars
-      - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-      - mkdir -p $CIRCLE_TEST_REPORTS/jacoco/
-      - cp -rf ./build/reports/allTests/* $CIRCLE_TEST_REPORTS/junit/
-      - find . -type d -regex ".*build/jacocoHtml/.*" -exec cp -rf {} $CIRCLE_TEST_REPORTS/jacoco/ \;
-      - bash <(curl -s https://codecov.io/bash)
+      - echo "Final"

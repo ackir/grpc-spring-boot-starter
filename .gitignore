@@ -70,3 +70,4 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 generated-src
+extra-vars
