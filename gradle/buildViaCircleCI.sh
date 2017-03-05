@@ -7,6 +7,7 @@ GRADLE_VERSION=$(./gradlew -version | grep Gradle | cut -d ' ' -f 2)
 echo "CI_PULL_REQUEST:$CI_PULL_REQUEST"
 echo "CIRCLE_TAG:$CIRCLE_TAG"
 echo "CIRCLE_BRANCH:$CIRCLE_BRANCH"
+echo "BINTRAY_USER:$BINTRAY_USER"
 
 if [ "x$CI_PULL_REQUEST" != "x" ]; then
   echo -e "Build Pull Request #$CI_PULL_REQUEST => Branch [$CIRCLE_BRANCH]"
