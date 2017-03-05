@@ -105,12 +105,23 @@ configure(subprojects - exampleProjects - project(':examples')) {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_API_KEY')
     publications = ['nebula']
+    dryRun = false
+    publish = true
     pkg {
       repo = 'maven'
       name = 'grpc-spring-boot-starter'
       userOrg = 'lavcraft'
       licenses = ['MIT']
+      websiteUrl = 'https://github.com/lavcraft/grpc-spring-boot-starter'
       vcsUrl = 'https://github.com/lavcraft/grpc-spring-boot-starter'
+      labels = ['grpc', 'java', 'spring', 'spring-boot', 'spring-boot-starter']
+      publicDownloadNumbers = true
+      attributes = [:]
+      version {
+        name = project.version
+        vcsTag = project.version
+        attributes = [:]
+      }
     }
   }
 
