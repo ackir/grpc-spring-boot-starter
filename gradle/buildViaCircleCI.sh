@@ -21,7 +21,7 @@ elif [ "x$CI_PULL_REQUEST" == "x" ] && [ "x$CIRCLE_TAG" != "x" ]; then
     ./gradlew -Prelease.travisci=true -Prelease.useLastTag=true candidate $SWITCHES
     ;;
   *)
-    ./gradlew -Prelease.travisci=true -Prelease.useLastTag=true final pushImage $SWITCHES
+    ./gradlew -Prelease.travisci=true -Prelease.useLastTag=true final $SWITCHES
     ;;
   esac
 else
