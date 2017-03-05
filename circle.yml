@@ -14,7 +14,8 @@ dependencies:
 
 test:
   override:
-    - ./gradlew build jacocoTestReport testReport
+    - mkdir build && openssl aes-256-cbc -d -in gradle/env.enc -out build/extra-vars -k $KEY
+    - source build/extra-vars && ./gradle/buildViaCircleCI.sh
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
     - mkdir -p $CIRCLE_TEST_REPORTS/jacoco/
