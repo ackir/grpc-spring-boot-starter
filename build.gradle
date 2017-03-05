@@ -98,7 +98,9 @@ configure(subprojects - exampleProjects - project(':examples')) {
   apply plugin: 'maven-publish'
   apply plugin: 'nebula.maven-publish'
   apply plugin: 'com.github.kt3k.coveralls'
+  apply plugin: 'com.jfrog.bintray'
 
+  bintrayUpload.onlyIf { !project.version.toString().toUpperCase().endsWith("-SNAPSHOT") }
 }
 
 apply plugin: 'com.jfrog.bintray'
@@ -113,7 +115,6 @@ bintray {
     vcsUrl = 'https://github.com/lavcraft/grpc-spring-boot-starter'
   }
 }
-bintrayUpload.onlyIf { !project.version.toString().toUpperCase().endsWith("-SNAPSHOT") }
 
 /**
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
