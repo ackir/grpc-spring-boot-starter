@@ -11,10 +11,12 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.grpc.spring.boot.autoconfigure.GRpcServerProperties;
 import org.grpc.spring.boot.autoconfigure.annotation.GRpcService;
+import org.grpc.spring.boot.autoconfigure.context.NettyServerStartingEvent;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.util.ReflectionUtils;
 
 import java.net.InetAddress;
@@ -40,6 +42,7 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
   private final ApplicationContext applicationContext;
   @Getter
   private final GRpcServerProperties gRpcServerProperties;
+  private final ApplicationEventPublisher publisher;
   @Getter
   private List<Server> servers = new ArrayList<>(1 /* for main case :) */);
 
@@ -121,6 +124,7 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
   private void startServer(Server server) {
     server.start();
     log.info("Server has been starting {}", server);
+    publisher.publishEvent(new NettyServerStartingEvent(applicationContext, server));
   }
 
   private void addServiceToServer(Object expectedGRpcServiceBean, ServerBuilder serverBuilder) {

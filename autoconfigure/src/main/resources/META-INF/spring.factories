@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationContextInitializer=org.grpc.spring.boot.autoconfigure.context.NettyServerPortInfoApplicaitonInitializer

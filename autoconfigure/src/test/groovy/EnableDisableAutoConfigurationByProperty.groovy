@@ -3,6 +3,7 @@ import org.grpc.spring.boot.autoconfigure.GRpcServerProperties
 import org.grpc.spring.boot.autoconfigure.component.GRpcServersWrapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -11,7 +12,6 @@ import spock.lang.Specification
 import spock.lang.Unroll
 
 import static org.springframework.boot.test.util.EnvironmentTestUtils.addEnvironment
-
 /**
  * @author tolkv
  * @since 07/03/16
@@ -74,15 +74,14 @@ class EnableDisableAutoConfigurationByProperty extends Specification {
 
   @Configuration
   protected static class SuppressBindUnrealIPAddressGRecWrapperConfiguration {
-    @Autowired
-    ApplicationContext context;
-    @Autowired
-    GRpcServerProperties gRpcServerProperties;
+    @Autowired private ApplicationContext context
+    @Autowired private GRpcServerProperties gRpcServerProperties
+    @Autowired private ApplicationEventPublisher publisher
 
     @Bean
-    public GRpcServersWrapper gRpcServersWrapper() {
+    GRpcServersWrapper gRpcServersWrapper() {
 
-      def wrapper = new GRpcServersWrapper(context, gRpcServerProperties);
+      def wrapper = new GRpcServersWrapper(context, gRpcServerProperties, publisher)
       wrapper.setServerStartHook({ Server -> println "suppress starting" })
       wrapper
     }
