@@ -8,7 +8,7 @@ machine:
 
 dependencies:
   pre:
-    - ./gradlew autoconfigure:dependencies --console=plain
+    - ./gradlew compileTestGroovy --console=plain
     - openssl aes-256-cbc -d -in gradle/env.enc -k $KEY > extra-vars
   cache_directories:
     - ~/.gradle
