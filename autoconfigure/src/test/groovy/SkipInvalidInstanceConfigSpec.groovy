@@ -1,8 +1,14 @@
 import configs.TestDefaultConfiguration
 import org.grpc.spring.boot.autoconfigure.annotation.GRPCLocalPort
+import org.junit.Rule
+import org.mockito.Matchers
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.rule.OutputCapture
 import spock.lang.Specification
 
+import java.util.regex.Matcher
+
+import static org.hamcrest.Matchers.*
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE
 
 /**
@@ -11,15 +17,19 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  */
 @SpringBootTest(webEnvironment = NONE, classes = [TestDefaultConfiguration],
     properties = [
-        'grpc.servers[0].address=127.0.0.1',
-        'grpc.servers[0].port=0',
+        'grpc.servers[1].address=127.0.0.1',
+        'grpc.servers[1].port=0',
     ])
-class GrpcLocalPortAnnotationSpec extends Specification {
+class SkipInvalidInstanceConfigSpec extends Specification {
   @GRPCLocalPort
   Integer port
 
-  def 'should init port property'() {
+  @Rule
+  OutputCapture capture
+
+  def 'should skip invalid server config'() {
     expect:
     port != 0
+    capture.expect(containsString("is not valid. Skipped"))
   }
 }

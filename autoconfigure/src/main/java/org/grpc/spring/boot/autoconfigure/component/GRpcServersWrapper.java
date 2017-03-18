@@ -71,13 +71,16 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
       serverInstanceConfigurations.add(new GRpcServerProperties.GRpcServerInstance(6565, InetAddress.getLocalHost()));
     }
 
+    List<GRpcServerInstance> serverInstanceConfigurationsFiltered = serverInstanceConfigurations.stream()
+        .filter(this::filterGRpcServerInstanceConfiguratino).collect(Collectors.toList());
+
     // Log info about starting configuration
-    log.info("Try to start GRpc server on {}", serverInstanceConfigurations.stream()
+    log.info("Try to start GRpc server on {}", serverInstanceConfigurationsFiltered.stream()
         .map((GRpcServerInstance instance) -> instance.getAddress().toString() + ":" + instance.getPort())
         .collect(Collectors.joining("|")));
 
     // Create server builders
-    serverInstanceConfigurations.stream()
+    serverInstanceConfigurationsFiltered.stream()
         .map(gRpcServerInstance -> NettyServerBuilder
             .forAddress(
                 new InetSocketAddress(
@@ -100,6 +103,14 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
     Thread awaitThread = new Thread(new GRpcServersAwaitRunnable(servers), "grpc-await-thread-0");
     awaitThread.setDaemon(false);
     awaitThread.start();
+  }
+
+  private boolean filterGRpcServerInstanceConfiguratino(GRpcServerInstance gRpcServerInstance) {
+    boolean isValid = gRpcServerInstance.getAddress() != null && gRpcServerInstance.getPort() != null;
+    if(!isValid) {
+      log.info("server {} is not valid. Skipped",gRpcServerInstance);
+    }
+    return isValid;
   }
 
   private void buildServer(Object expectedGRpcServiceBean, List<ServerBuilder> runningServers) {
