@@ -71,3 +71,6 @@ gradle-app.setting
 
 generated-src
 extra-vars
+
+### macOS template
+*.DS_Store
