@@ -1,3 +1,4 @@
+import configs.TestDefaultConfiguration
 import org.grpc.spring.boot.autoconfigure.annotation.GRPCLocalPort
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification

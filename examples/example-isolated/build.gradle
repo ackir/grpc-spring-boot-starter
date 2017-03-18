@@ -39,7 +39,7 @@ dependencyManagement {
       entry 'grpc-protobuf'
       entry 'grpc-stub'
     }
-
+    dependency 'ru.alfalab.grpc.spring:starter:0.5.7'
     dependency "com.google.protobuf:protobuf-java:$protobufVersion"
     dependency 'org.projectlombok:lombok:1.16.14'
     dependency 'org.codehaus.groovy:groovy-all:2.4.8'
@@ -56,7 +56,7 @@ dependencies {
   compile 'io.netty:netty-common'
   compile 'io.netty:netty-transport'
   compile 'org.springframework.boot:spring-boot-starter-actuator'
-  compile 'ru.alfalab.grpc.spring:starter:0.5.7'
+  compile 'ru.alfalab.grpc.spring:starter'
 
   compileOnly 'org.projectlombok:lombok'
 

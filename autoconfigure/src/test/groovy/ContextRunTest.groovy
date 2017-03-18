@@ -1,3 +1,4 @@
+import configs.TestDefaultConfiguration
 import org.grpc.spring.boot.autoconfigure.component.GRpcServersWrapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -10,7 +11,13 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * @author tolkv
  * @since 07/03/16
  */
-@SpringBootTest(webEnvironment = NONE, classes = [TestDefaultConfiguration])
+@SpringBootTest(webEnvironment = NONE, classes = [TestDefaultConfiguration],
+        properties=[
+                'grpc.servers[0].address=127.0.0.1',
+                'grpc.servers[0].port=6565',
+                'grpc.servers[1].address=127.0.0.1',
+                'grpc.servers[1].port=0',
+        ])
 class ContextRunTest extends Specification {
   public static final int DEFAULT_GRPC_PORT = 6565
   @Autowired

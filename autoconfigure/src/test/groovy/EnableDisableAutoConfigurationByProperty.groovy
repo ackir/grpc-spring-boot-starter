@@ -24,7 +24,7 @@ class EnableDisableAutoConfigurationByProperty extends Specification {
     context = new AnnotationConfigApplicationContext()
   }
 
-  def clean() {
+  def cleanup() {
     context.close()
   }
 
