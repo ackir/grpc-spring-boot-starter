@@ -28,7 +28,7 @@ public class NettyServerPortInfoApplicaitonInitializer implements ApplicationCon
 
   private void onApplicationEvent(NettyServerStartingEvent event) {
     setPortProperty(event.getApplicationContext(),
-        GRPCLocalPort.GRPC_ADVERTIZED_LOCAL_PORT_NAME,
+        GRPCLocalPort.GRPC_ADVERTIZED_LOCAL_PORT_PROPERTY_NAME,
         event.getServer().getPort());
   }
 
@@ -45,9 +45,9 @@ public class NettyServerPortInfoApplicaitonInitializer implements ApplicationCon
   @SuppressWarnings("unchecked")
   private void setPortProperty(ConfigurableEnvironment environment, String propertyName, int port) {
     MutablePropertySources sources = environment.getPropertySources();
-    PropertySource<?> source = sources.get(GRPCLocalPort.GRPC_ADVERTIZED_LOCAL_PORT_NAME);
+    PropertySource<?> source = sources.get(GRPCLocalPort.GRPC_ADVERTIZED_LOCAL_PORT_PROPERTY_NAME);
     if (source == null) {
-      source = new MapPropertySource(GRPCLocalPort.GRPC_ADVERTIZED_LOCAL_PORT_NAME, new HashMap<>());
+      source = new MapPropertySource(GRPCLocalPort.GRPC_ADVERTIZED_LOCAL_PORT_PROPERTY_NAME, new HashMap<>());
       sources.addFirst(source);
     }
     ((Map<String, Object>) source.getSource()).put(propertyName, port);

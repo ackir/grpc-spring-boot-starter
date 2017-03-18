@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Documented
 @Value("${local.grpc.server.port}")
 public @interface GRPCLocalPort {
-  String GRPC_ADVERTIZED_LOCAL_PORT_NAME = "local.grpc.server.port";
+  String GRPC_ADVERTIZED_LOCAL_PORT_PROPERTY_NAME = "local.grpc.server.port";
 }
