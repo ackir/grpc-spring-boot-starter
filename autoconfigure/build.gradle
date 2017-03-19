@@ -4,8 +4,9 @@ dependencies {
   provided 'org.springframework.boot:spring-boot-starter', optional
   provided 'org.springframework.boot:spring-boot-starter-actuator', optional
   provided 'io.grpc:grpc-netty', optional
-  provided 'org.springframework.boot:spring-boot-configuration-processor', optional
-  provided 'org.springframework.boot:spring-boot-starter-test', optional
+
+  compileOnly 'org.springframework.boot:spring-boot-configuration-processor', optional
+  testCompile 'org.springframework.boot:spring-boot-starter-test', optional
 }
 
 compileJava.dependsOn(processResources) // from spring doc, need for generate meta-data by annotation processor

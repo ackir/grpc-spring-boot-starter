@@ -1,8 +1,11 @@
+apply plugin: 'nebula.compile-api'
+
 dependencies {
-  compile project(':autoconfigure')
+  compileApi project(':autoconfigure')
 
   compile 'org.springframework.boot:spring-boot-starter'
-  compile 'io.grpc:grpc-netty'
-  compile 'org.springframework.boot:spring-boot-configuration-processor'
-  compile 'org.springframework.boot:spring-boot-starter-test'
+  compileApi 'io.grpc:grpc-netty', optional
+
+  compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
+  testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
