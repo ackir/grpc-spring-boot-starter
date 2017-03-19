@@ -100,6 +100,8 @@ configure(subprojects - exampleProjects - project(':examples')) {
   apply plugin: 'com.github.kt3k.coveralls'
   apply plugin: 'nebula.maven-publish'
   apply plugin: 'com.jfrog.bintray'
+  apply plugin: 'nebula.source-jar'
+  apply plugin: 'nebula.javadoc-jar'
 
   bintray {
     user = System.getenv('BINTRAY_USER')
