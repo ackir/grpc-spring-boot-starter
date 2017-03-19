@@ -6,7 +6,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import spock.lang.Specification
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE
-
 /**
  * @author tolkv
  * @since 07/03/16
@@ -19,41 +18,35 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
                 'grpc.servers[1].port=0',
         ])
 class ContextRunTest extends Specification {
-  public static final int DEFAULT_GRPC_PORT = 6565
   @Autowired
   AnnotationConfigApplicationContext applicationContext
 
-  def setup() {
-
-  }
-
   def 'should valid init grpc server bean with default configuration'() {
-    given:
-    def servers = applicationContext.getBeansOfType(GRpcServersWrapper)
+    given: 'get all server instances. According to config above – two instances'
+    def beans = applicationContext.getBeansOfType(GRpcServersWrapper)
+    def serversWrapper = beans.values().first()
+    def firstServerWith6565Port = serversWrapper.servers.first()
+    def secondServerWithRandomPort = serversWrapper.servers[1]
 
-    expect:
-    servers.size() == 1
-    GRpcServersWrapper serversWrapper = servers.values().first()
-    def serverWithDefaultPort = serversWrapper.servers.first()
-    def serverWithRandomPort = serversWrapper.servers[1]
+    expect: 'should have only one bean'
+    beans.size() == 1
 
-    and:
-    with(serverWithDefaultPort) {
+    and: 'contains two configured server'
+    serversWrapper.servers.size() == 2
+
+    and: 'should init server with 6565 port according to config'
+    with(firstServerWith6565Port) {
       port == DEFAULT_GRPC_PORT
     }
 
-    and:
-    with(serverWithRandomPort) {
+    and: 'should start server with random port'
+    with(secondServerWithRandomPort) {
       port != 0
+      port != 6565
       println "Port: $port"
     }
 
-    and:
-    serversWrapper.servers.size() == 2
   }
 
-  def clean() {
-    if (applicationContext != null)
-      applicationContext.close()
-  }
+  public static final int DEFAULT_GRPC_PORT = 6565
 }

@@ -3,17 +3,38 @@
 [![Circle CI](https://circleci.com/gh/lavcraft/grpc-spring-boot-starter/tree/master.svg?style=shield)](https://circleci.com/gh/lavcraft/grpc-spring-boot-starter/tree/master)
 [![codecov.io](https://codecov.io/github/lavcraft/grpc-spring-boot-starter/coverage.svg?branch=master)](https://codecov.io/github/lavcraft/grpc-spring-boot-starter?branch=master)
 [![Join the chat at https://gitter.im/lavcraft/grpc-spring-boot-starter](https://badges.gitter.im/lavcraft/grpc-spring-boot-starter.svg)](https://gitter.im/lavcraft/grpc-spring-boot-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Download](https://api.bintray.com/packages/lavcraft/maven/grpc-spring-boot-starter/images/download.svg) ](https://bintray.com/lavcraft/maven/grpc-spring-boot-starter/_latestVersion)
 
 ## Usage
 
 * Add dependencies (see examples)
 
 ```
+ru.alfalab.grpc.spring:starter
 io.grpc:grpc-stub
 io.grpc:grpc-protobuf
 io.grpc:grpc-netty
-```    
+```
     
+example:
+```groovy
+repositories {
+  jcenter()
+}
+
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+  compile "ru.alfalab.grpc.spring:starter:$starterVersion"
+  compile "io.grpc:grpc-stub:$grpcVersion"
+  compile "io.grpc:grpc-protobuf:$grpcVersion"
+  compile "io.grpc:grpc-netty:$grpcVersion"  
+}
+// see examples/example-isolated/build.gradle for details  
+```
+
 * Add `@EnableGRpcServer` anotation to your configuration for enable grpc server
 * Customize configuration - application.yml/application.property. Example:
 
@@ -45,6 +66,18 @@ or
 
 * port 6565
 * host/ip localhost/127.0.0.1
+
+## Advanced features
+
+### Discover random port
+
+If you want to run on random port (`grpc.servers[0].port=0`), you will need inject resulted port. 
+Use `@GRPCLocalPort` please for solve this
+
+```groovy
+@GRPCLocalPort
+int port
+```
 
 ## Tested on
 

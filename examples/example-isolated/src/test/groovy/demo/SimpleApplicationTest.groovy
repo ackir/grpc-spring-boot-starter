@@ -6,6 +6,7 @@ import demo.grpc.health.HealthGrpc
 import io.grpc.ManagedChannel
 import io.grpc.netty.NettyChannelBuilder
 import io.grpc.stub.StreamObserver
+import org.grpc.spring.boot.autoconfigure.annotation.GRPCLocalPort
 import org.springframework.boot.test.context.SpringBootTest
 import spock.lang.Specification
 import spock.util.concurrent.AsyncConditions
@@ -20,13 +21,16 @@ import static demo.grpc.health.HealthOuterClass.Empty
 class SimpleApplicationTest extends Specification {
   ManagedChannel channel
 
+  @GRPCLocalPort
+  Integer port
+
   def setup() {
-    channel = NettyChannelBuilder.forAddress("localhost", 6565)
+    channel = NettyChannelBuilder.forAddress("localhost", port)
         .usePlaintext(true)
         .build()
   }
 
-  def clean() {
+  def cleanup() {
     channel.shutdown()
   }
 
