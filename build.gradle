@@ -3,19 +3,19 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
-    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE'
-    classpath 'com.netflix.nebula:gradle-info-plugin:3.5.0'
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.3'
+    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE'
+    classpath 'com.netflix.nebula:gradle-info-plugin:3.6.0'
     classpath "com.netflix.nebula:nebula-publishing-plugin:4.9.1"
-    classpath 'com.netflix.nebula:nebula-release-plugin:4.1.1'
+    classpath 'com.netflix.nebula:nebula-release-plugin:6.1.0'
     classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.3'
     classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1'
+    classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
   }
 }
 
 ext {
-  grpcVersion = '1.6.1'
+  grpcVersion = '1.7.0'
   protobufVersion = '3.4.0'
   exampleProjects = allprojects.findAll { it.name.startsWith 'example-' }
 }

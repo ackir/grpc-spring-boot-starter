@@ -83,9 +83,8 @@ int port
 
 | name                      | version       |
 | ---                       | ---           |
-| io.grpc:grpc-stub         | 1.1.2         |
-| io.grpc:grpc-protobuf     | 1.1.2         |
-| io.grpc:grpc-netty        | 1.1.2         |
+| io.grpc:grpc-stub         | 1.7.0         |
+| io.grpc:grpc-protobuf     | 1.7.0         |
+| io.grpc:grpc-netty        | 1.7.0         |
 | com.google.protobufprotoc | 3.2.0         |
-| Spring Boot               | 1.5.1.RELEASE |
-| Spring Boot               | 1.5.1.RELEASE |
+| Spring Boot               | 1.5.8.RELEASE |
