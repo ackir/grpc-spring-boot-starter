@@ -2,6 +2,7 @@
 
 [![Circle CI](https://circleci.com/gh/lavcraft/grpc-spring-boot-starter/tree/master.svg?style=shield)](https://circleci.com/gh/lavcraft/grpc-spring-boot-starter/tree/master)
 [![codecov.io](https://codecov.io/github/lavcraft/grpc-spring-boot-starter/coverage.svg?branch=master)](https://codecov.io/github/lavcraft/grpc-spring-boot-starter?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ae2b8efd3124618928e3008d8e90afd)](https://www.codacy.com/app/lavcraft/grpc-spring-boot-starter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lavcraft/grpc-spring-boot-starter&amp;utm_campaign=Badge_Grade)
 [![Join the chat at https://gitter.im/lavcraft/grpc-spring-boot-starter](https://badges.gitter.im/lavcraft/grpc-spring-boot-starter.svg)](https://gitter.im/lavcraft/grpc-spring-boot-starter?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Download](https://api.bintray.com/packages/lavcraft/maven/grpc-spring-boot-starter/images/download.svg) ](https://bintray.com/lavcraft/maven/grpc-spring-boot-starter/_latestVersion)
 
