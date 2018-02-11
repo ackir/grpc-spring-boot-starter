@@ -3,13 +3,13 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.3'
-    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE'
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.4'
+    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE'
     classpath 'com.netflix.nebula:gradle-info-plugin:3.6.0'
     classpath "com.netflix.nebula:nebula-publishing-plugin:4.9.1"
-    classpath 'com.netflix.nebula:nebula-release-plugin:6.1.0'
+    classpath 'com.netflix.nebula:nebula-release-plugin:6.3.0'
     classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.3'
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
     classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
   }
 }
@@ -38,8 +38,8 @@ allprojects {
 subprojects {
   apply plugin: 'java'
   apply plugin: 'jacoco'
-  apply plugin: 'nebula.provided-base'
   apply plugin: 'nebula.optional-base'
+  apply plugin: 'nebula.provided-base'
 
   group = rootProject.group
 
@@ -68,7 +68,7 @@ subprojects {
   }
 
   dependencies {
-    provided 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
 
     testCompile 'org.codehaus.groovy:groovy-all'
     testCompile 'org.spockframework:spock-core'
@@ -217,5 +217,5 @@ configure(exampleProjects) {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '3.4'
+  gradleVersion = '4.5.1'
 }
