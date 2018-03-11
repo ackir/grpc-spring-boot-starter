@@ -1,0 +1,6 @@
+grpc:
+ enabled: true
+ servers:
+   -
+     address: 0.0.0.0
+     port: 0
