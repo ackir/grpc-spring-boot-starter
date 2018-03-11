@@ -21,12 +21,13 @@ import java.util.List;
 @ConfigurationProperties("grpc")
 public class GRpcServerProperties {
   private List<GRpcServerInstance> servers = new ArrayList<>(1);
+  private boolean                  enabled = true;
 
   @Data
   @NoArgsConstructor
   @AllArgsConstructor
   public static class GRpcServerInstance {
-    private Integer port;
+    private Integer     port;
     private InetAddress address;
   }
 }
