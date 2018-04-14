@@ -1,1 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.grpc.spring.boot.autoconfigure.GRpcAutoConfiguration
+org.springframework.context.ApplicationContextInitializer=org.grpc.spring.boot.autoconfigure.context.NettyServerPortInfoApplicaitonInitializer
