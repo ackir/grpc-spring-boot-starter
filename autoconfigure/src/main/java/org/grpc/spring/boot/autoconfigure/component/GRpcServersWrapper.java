@@ -3,6 +3,7 @@ package org.grpc.spring.boot.autoconfigure.component;
 import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.netty.NettyServerBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -38,13 +39,13 @@ import static org.grpc.spring.boot.autoconfigure.GRpcServerProperties.GRpcServer
 @Slf4j
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GRpcServersWrapper implements DisposableBean, InitializingBean {
-  private static final String GRPC_CLASS_IDENTIFIER = "Grpc";
-  private final ApplicationContext applicationContext;
+  private static final String                    GRPC_CLASS_IDENTIFIER = "Grpc";
+  private final        ApplicationContext        applicationContext;
   @Getter
-  private final GRpcServerProperties gRpcServerProperties;
-  private final ApplicationEventPublisher publisher;
+  private final        GRpcServerProperties      gRpcServerProperties;
+  private final        ApplicationEventPublisher publisher;
   @Getter
-  private List<Server> servers = new ArrayList<>(1 /* for main case :) */);
+  private              List<Server>              servers               = new ArrayList<>(1 /* for main case :) */);
 
   @Getter
   @Setter
@@ -68,7 +69,7 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
     if (serverInstanceConfigurations.isEmpty()) {
       log.warn("GRpc server instances did`t configure. Using default: { address: 127.0.0.1, port: 6565 }");
       serverInstanceConfigurations = new ArrayList<>(1);
-      serverInstanceConfigurations.add(new GRpcServerProperties.GRpcServerInstance(6565, InetAddress.getLocalHost()));
+      serverInstanceConfigurations.add(new GRpcServerProperties.GRpcServerInstance(6565, InetAddress.getLocalHost(), null));
     }
 
     List<GRpcServerInstance> serverInstanceConfigurationsFiltered = serverInstanceConfigurations.stream()
@@ -76,17 +77,23 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
 
     // Log info about starting configuration
     log.info("Try to start GRpc server on {}", serverInstanceConfigurationsFiltered.stream()
-        .map((GRpcServerInstance instance) -> instance.getAddress().toString() + ":" + instance.getPort())
+        .map((GRpcServerInstance instance) -> extractAddress(instance) + ":" + instance.getPort())
         .collect(Collectors.joining("|")));
 
     // Create server builders
     serverInstanceConfigurationsFiltered.stream()
-        .map(gRpcServerInstance -> NettyServerBuilder
-            .forAddress(
-                new InetSocketAddress(
-                    gRpcServerInstance.getAddress(),
-                    gRpcServerInstance.getPort())
-            )
+        .map(gRpcServerInstance -> {
+              if (gRpcServerInstance.getProcessName() != null) {
+                return InProcessServerBuilder.forName(gRpcServerInstance.getProcessName());
+              }
+
+              return NettyServerBuilder
+                  .forAddress(
+                      new InetSocketAddress(
+                          gRpcServerInstance.getAddress(),
+                          gRpcServerInstance.getPort())
+                  );
+            }
         )
         .forEach(serversBuilders::add);
 
@@ -105,10 +112,19 @@ public class GRpcServersWrapper implements DisposableBean, InitializingBean {
     awaitThread.start();
   }
 
+  private String extractAddress(GRpcServerInstance instance) {
+    if(instance != null && instance.getAddress() != null) {
+      return instance.getAddress().toString();
+    }
+    return "<empty>";
+  }
+
   private boolean filterGRpcServerInstanceConfiguratino(GRpcServerInstance gRpcServerInstance) {
-    boolean isValid = gRpcServerInstance.getAddress() != null && gRpcServerInstance.getPort() != null;
-    if(!isValid) {
-      log.info("server {} is not valid. Skipped",gRpcServerInstance);
+    boolean isValid = (gRpcServerInstance.getAddress() != null && gRpcServerInstance.getPort() != null)
+        || gRpcServerInstance.getProcessName() != null;
+
+    if (!isValid) {
+      log.info("server {} is not valid. Skipped", gRpcServerInstance);
     }
     return isValid;
   }

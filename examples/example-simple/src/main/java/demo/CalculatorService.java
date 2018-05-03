@@ -26,6 +26,7 @@ public class CalculatorService extends CalculatorGrpc.CalculatorImplBase {
 
     ResultReply result = ResultReply.newBuilder()
         .setResult(request.getFirst() + request.getSecond() + i)
+        .setCount(i)
         .build();
 
     responseObserver.onNext(result);

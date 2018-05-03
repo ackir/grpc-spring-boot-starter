@@ -1,16 +1,17 @@
 buildscript {
+  ext {
+    springBootVersion = '2.0.1.RELEASE'
+  }
   repositories {
+    mavenLocal()
     jcenter()
   }
   dependencies {
     classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.4'
-    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE'
-    classpath 'com.netflix.nebula:gradle-info-plugin:3.6.0'
-    classpath "com.netflix.nebula:nebula-publishing-plugin:4.9.1"
-    classpath 'com.netflix.nebula:nebula-release-plugin:6.3.0'
-    classpath 'com.netflix.nebula:gradle-extra-configurations-plugin:3.0.3'
+    classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
     classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
     classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
+    classpath 'ru.alfalab.gradle.platform.stack:platform-gradle-stacks-plugin:0.3.13'
   }
 }
 
@@ -26,6 +27,9 @@ apply plugin: 'com.jfrog.bintray'
 
 allprojects {
   repositories {
+    maven {
+      url 'https://repo.spring.io/libs-milestone'
+    }
     jcenter()
   }
 
@@ -39,7 +43,6 @@ subprojects {
   apply plugin: 'java'
   apply plugin: 'jacoco'
   apply plugin: 'nebula.optional-base'
-  apply plugin: 'nebula.provided-base'
 
   group = rootProject.group
 
@@ -48,7 +51,8 @@ subprojects {
 
   dependencyManagement {
     imports {
-      mavenBom 'io.spring.platform:platform-bom:Brussels-RELEASE'
+      mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
+      mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.M9'
     }
     dependencies {
       dependencySet(group: 'io.grpc', version: grpcVersion) {
@@ -156,6 +160,7 @@ configure(exampleProjects) {
     compile project(':starter')
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.cloud:spring-cloud-commons'
   }
 
   sourceSets {
@@ -210,10 +215,6 @@ configure(exampleProjects) {
     }
   }
   clean.dependsOn cleanProtoGen
-
-  springBoot {
-    executable = true
-  }
 }
 
 task wrapper(type: Wrapper) {

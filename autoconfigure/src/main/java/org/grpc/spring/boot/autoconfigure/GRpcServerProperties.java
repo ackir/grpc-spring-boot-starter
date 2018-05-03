@@ -1,11 +1,9 @@
 package org.grpc.spring.boot.autoconfigure;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import javax.annotation.Nullable;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,5 +27,7 @@ public class GRpcServerProperties {
   public static class GRpcServerInstance {
     private Integer     port;
     private InetAddress address;
+    private String processName;
+
   }
 }

@@ -4,7 +4,7 @@ buildscript {
   }
   dependencies {
     classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
-    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE'
+    classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE'
   }
 }
 
@@ -36,7 +36,7 @@ dependencyManagement {
       entry 'grpc-protobuf'
       entry 'grpc-stub'
     }
-    dependency 'ru.alfalab.grpc.spring:starter:0.5.9'
+    dependency 'ru.alfalab.grpc.spring:starter:0.8.1'
     dependency "com.google.protobuf:protobuf-java:$protobufVersion"
     dependency 'org.projectlombok:lombok:1.16.14'
     dependency 'org.codehaus.groovy:groovy-all:2.4.8'

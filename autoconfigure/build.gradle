@@ -1,12 +1,29 @@
 apply plugin: 'groovy'
 
 dependencies {
-  provided 'org.springframework.boot:spring-boot-starter', optional
-  provided 'org.springframework.boot:spring-boot-starter-actuator', optional
-  provided 'io.grpc:grpc-netty', optional
+  // Spring Boot Dependencies
+  compileOnly 'org.springframework.boot:spring-boot-starter', optional
+  compileOnly 'org.springframework.boot:spring-boot-starter-web', optional
+  compileOnly 'org.springframework.boot:spring-boot-starter-actuator', optional
+  compileOnly 'org.springframework.cloud:spring-cloud-commons', optional
 
+  compileOnly 'io.grpc:grpc-netty', optional
+
+  compileOnly 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client', optional
+
+  compileOnly 'org.springframework:spring-web', optional //for ResponseEntity and cloud integration
+
+  // APT
   compileOnly 'org.springframework.boot:spring-boot-configuration-processor', optional
-  testCompile 'org.springframework.boot:spring-boot-starter-test', optional
+
+  // Spring Boot Dependencies
+  testCompile 'org.springframework.boot:spring-boot-starter-test'
+  testCompile 'org.springframework.boot:spring-boot-starter'
+  testCompile 'org.springframework.boot:spring-boot-starter-actuator'
+  testCompile 'io.grpc:grpc-netty'
+
+//  // Cloud Dependencies
+  testCompile 'org.springframework.cloud:spring-cloud-commons'
 }
 
 compileJava.dependsOn(processResources) // from spring doc, need for generate meta-data by annotation processor

@@ -3,3 +3,25 @@ grpc:
    -
      address: 127.0.0.1
      port: 0
+   -
+     processName: spring.calc-app
+
+spring:
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            calc-app:
+              -
+                uri: http://localhost:10040
+              -
+                uri: http://localhost:10041
+              -
+                uri: http://localhost:${local.grpc.server.port}
+              -
+                uri: http://localhost:10042
+              -
+                uri: http://localhost:10043
+              -
+                uri: http://localhost:10044

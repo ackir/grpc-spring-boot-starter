@@ -25,7 +25,7 @@ class SimpleApplicationTest extends Specification {
   Integer port
 
   def setup() {
-    channel = NettyChannelBuilder.forAddress("localhost", port)
+    channel = NettyChannelBuilder.forAddress('127.0.0.1', port)
         .usePlaintext(true)
         .build()
   }
